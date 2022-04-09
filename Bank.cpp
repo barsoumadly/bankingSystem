@@ -113,12 +113,14 @@ Bank::Bank() {
     in_file.open("../bank_system.txt", ios::in);
     while (!in_file.eof()) {
         getline(in_file, line);
-        vector<string> array = split(line);
-        Account account;
-        account.set_first_name(array[0]);
-        account.set_last_name(array[1]);
-        account.set_account_number(stoi(array[2]));
-        account.set_balance(stod(array[3]));
-        accounts.push_back(account);
+        if (!line.empty()) {
+            vector<string> array = split(line);
+            Account account;
+            account.set_first_name(array[0]);
+            account.set_last_name(array[1]);
+            account.set_account_number(stoi(array[2]));
+            account.set_balance(stod(array[3]));
+            accounts.push_back(account);
+        }
     }
 }
