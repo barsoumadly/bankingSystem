@@ -1,6 +1,6 @@
 #include "Account.h"
 
-int number = 0;
+int Account::number = 0;
 
 void Account::set_first_name(string firstName) {
     this->first_name = firstName;

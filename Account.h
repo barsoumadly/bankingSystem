@@ -11,6 +11,7 @@ private:
     double balance;
     int account_number;
 public:
+   static int number;
 
     void set_first_name(string firstName);
 

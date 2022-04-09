@@ -31,7 +31,7 @@ void Bank::open_account(string first_name, string last_name, double balance) {
     out_file << account.get_first_name() << ","
              << account.get_last_name() << ","
              << account.get_account_number()
-             << "," << account.get_balance() << endl;
+             << "," << account.get_balance();
     add_account(account);
 }
 
@@ -121,6 +121,7 @@ Bank::Bank() {
             account.set_account_number(stoi(array[2]));
             account.set_balance(stod(array[3]));
             accounts.push_back(account);
+            Account::number = stoi(array[2]);
         }
     }
 }

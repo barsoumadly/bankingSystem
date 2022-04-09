@@ -1,5 +1,2 @@
-Barsoum,ADly,1,5000
-
-Bishoy,Adly,2,6000
-
-Adly,Daniel,3,90000
+Barsoum,adly,1,5000
+Bishoy,adly,2,9000
