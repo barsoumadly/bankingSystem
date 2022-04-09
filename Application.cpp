@@ -5,9 +5,6 @@
 
 using namespace std;
 
-Bank bank;
-Account account;
-
 class Commands {
 public:
     static const int OPEN_ACCOUNT;
@@ -75,25 +72,26 @@ int Application::command_string_to_integer(string &commandStr) {
 }
 
 void Application::perform_command(int command) {
+    Account account;
     switch (command) {
         case Commands::OPEN_ACCOUNT:
-            bank.get_data();
+            Bank::get_data();
             break;
         case Commands::BALANCE_ENQUIRY:
-            bank.show_searched_account();
+            Bank::show_searched_account();
             break;
         case Commands::DEPOSIT:
-            bank.get_account_number();
-            account.set_deposit(bank.get_balance());
+            Bank::get_account_number();
+            account.set_deposit(Bank::get_balance());
             break;
         case Commands::WITHDRAWAL:
-            bank.get_account_number();
-            account.set_withdrawal(bank.get_balance());
+            Bank::get_account_number();
+            account.set_withdrawal(Bank::get_balance());
             break;
         case Commands::CLOSE_ACCOUNT:
             break;
         case Commands::SHOW_ACCOUNTS:
-            bank.display_accounts();
+            Bank::display_accounts();
             break;
         default:
             cout << "Wrong option" << endl;

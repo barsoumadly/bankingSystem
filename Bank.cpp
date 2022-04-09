@@ -7,16 +7,31 @@ using namespace std;
 ofstream out_file("../bank_system.txt", ios::app);
 
 void Bank::get_data() {
+    string first_name = get_first_name();
+    string last_name = get_last_name();
+    double balance = get_balance();
+    open_account(first_name, last_name, balance);
+}
+
+string Bank::get_first_name() {
     cout << "Enter First Name: ";
     string first_name;
     cin >> first_name;
+    return first_name;
+}
+
+string Bank::get_last_name() {
     cout << "Enter Last Name: ";
     string last_name;
     cin >> last_name;
-    cout << "Enter initial balance: ";
-    double initial_balance = 0.0;
-    cin >> initial_balance;
-    open_account(first_name, last_name, initial_balance);
+    return last_name;
+}
+
+double Bank::get_balance() {
+    cout << "Enter Balance: ";
+    double balance = 0.0;
+    cin >> balance;
+    return balance;
 }
 
 void Bank::open_account(string first_name, string last_name, double balance) {
@@ -25,19 +40,23 @@ void Bank::open_account(string first_name, string last_name, double balance) {
     account.set_last_name(last_name);
     account.set_balance(balance);
     account.increment_account_number();
-    if (accounts.size() != 0) {
+    save_account(account);
+}
+
+void Bank::save_account(const Account &account) {
+    write_in_file(account);
+    accounts.push_back(account);
+    display_created_account(account);
+}
+
+void Bank::write_in_file(Account account) {
+    if (!accounts.empty()) {
         out_file << endl;
     }
     out_file << account.get_first_name() << ","
              << account.get_last_name() << ","
              << account.get_account_number()
              << "," << account.get_balance();
-    add_account(account);
-}
-
-void Bank::add_account(const Account &account) {
-    accounts.push_back(account);
-    display_created_account(account);
 }
 
 void Bank::display_created_account(Account account) {
@@ -76,21 +95,12 @@ int Bank::get_account_number() {
     return account_number;
 }
 
-double Bank::get_balance() {
-    cout << "Enter Balance: ";
-    double balance = 0.0;
-    cin >> balance;
-    return balance;
-}
-
-
 Account Bank::search_for_account_number(int account_number) {
     for (auto &account: accounts) {
         if (account.get_account_number() == account_number)
             return account;
     }
 }
-
 
 vector<string> split(string line) {
     vector<string> array;
@@ -125,3 +135,7 @@ Bank::Bank() {
         }
     }
 }
+
+
+
+

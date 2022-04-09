@@ -9,25 +9,31 @@ class Bank {
 public:
     Bank();
 
-    vector<Account> accounts;
+    static vector<Account> accounts;
 
-    void get_data();
+    static void get_data();
 
-    void open_account(string first_name, string last_name, double balance);
+    static string get_first_name();
 
-    void add_account(const Account &account);
+    static string get_last_name();
 
-    int get_account_number();
+    static double get_balance();
 
-    double get_balance();
+    static void open_account(string first_name, string last_name, double balance);
 
-    Account search_for_account_number(int account_number);
+    static void write_in_file(Account account);
 
-    void display_created_account(Account account);
+    static void save_account(const Account &account);
 
-    void display_accounts();
+    static int get_account_number();
 
-    void show_searched_account();
+    static Account search_for_account_number(int account_number);
+
+    static void display_created_account(Account account);
+
+    static void display_accounts();
+
+    static void show_searched_account();
 };
 
 #endif //_BANK_H
