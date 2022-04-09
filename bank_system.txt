@@ -1,4 +1,2 @@
-Barsoum,adly,1,5000
-Bishoy,adly,2,9000
-adly,daneil,3,5000
-
+Barsoum,adly,1,6000
+Adly,daniel,3,5000

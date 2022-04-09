@@ -4,13 +4,16 @@
 
 using namespace std;
 
+vector<Account> Bank::accounts;
+
 ofstream out_file("../bank_system.txt", ios::app);
 
-void Bank::get_data() {
-    string first_name = get_first_name();
-    string last_name = get_last_name();
-    double balance = get_balance();
-    open_account(first_name, last_name, balance);
+vector<string> Bank::get_data() {
+    vector<string> data;
+    data.push_back(get_first_name());
+    data.push_back(get_last_name());
+    data.push_back(get_balance());
+    return data;
 }
 
 string Bank::get_first_name() {
@@ -27,29 +30,35 @@ string Bank::get_last_name() {
     return last_name;
 }
 
-double Bank::get_balance() {
+string Bank::get_balance() {
     cout << "Enter Balance: ";
-    double balance = 0.0;
+    string balance = " ";
     cin >> balance;
     return balance;
 }
 
-void Bank::open_account(string first_name, string last_name, double balance) {
-    Account account;
-    account.set_first_name(first_name);
-    account.set_last_name(last_name);
-    account.set_balance(balance);
-    account.increment_account_number();
+void Bank::open_account() {
+    vector<string> data = get_data();
+    Account account = set_account_data(data);
     save_account(account);
 }
 
+Account Bank::set_account_data(vector<string> data) {
+    Account account;
+    account.set_first_name(data[0]);
+    account.set_last_name(data[1]);
+    account.set_balance(stod(data[2]));
+    account.increment_account_number();
+    return account;
+}
+
 void Bank::save_account(const Account &account) {
-    write_in_file(account);
+    add_in_file(account);
     accounts.push_back(account);
     display_created_account(account);
 }
 
-void Bank::write_in_file(Account account) {
+void Bank::add_in_file(Account account) {
     if (!accounts.empty()) {
         out_file << endl;
     }
@@ -68,24 +77,24 @@ void Bank::display_created_account(Account account) {
 }
 
 void Bank::display_accounts() {
-    for (int i = 0; i < accounts.size(); i++) {
-        cout << "Account " << i + 1 << endl;
-        cout << "First Name: " << accounts[i].get_first_name() << endl;
-        cout << "Last Name: " << accounts[i].get_last_name() << endl;
-        cout << "Account Number: " << accounts[i].get_account_number() << endl;
-        cout << "Balance: " << accounts[i].get_balance() << endl;
+    for (auto &account: accounts) {
+        cout << "Account " << account.get_account_number() << endl;
+        cout << "First Name: " << account.get_first_name() << endl;
+        cout << "Last Name: " << account.get_last_name() << endl;
+        cout << "Account Number: " << account.get_account_number() << endl;
+        cout << "Balance: " << account.get_balance() << endl;
         cout << "--------------------------------------------------" << endl;
     }
 }
 
 void Bank::show_searched_account() {
     int account_number = get_account_number();
-    Account account = search_for_account_number(account_number);
+    Account *account = search_for_account_number(account_number);
     cout << "Your Account Details" << endl;
-    cout << "First Name: " << account.get_first_name() << endl
-         << "Last Name: " << account.get_last_name() << endl
-         << "Account Number: " << account.get_account_number() << endl
-         << "Balance: " << account.get_balance() << endl;
+    cout << "First Name: " << account->get_first_name() << endl
+         << "Last Name: " << account->get_last_name() << endl
+         << "Account Number: " << account->get_account_number() << endl
+         << "Balance: " << account->get_balance() << endl;
 }
 
 int Bank::get_account_number() {
@@ -95,14 +104,14 @@ int Bank::get_account_number() {
     return account_number;
 }
 
-Account Bank::search_for_account_number(int account_number) {
-    for (auto &account: accounts) {
+Account *Bank::search_for_account_number(int account_number) {
+    for (Account &account: accounts) {
         if (account.get_account_number() == account_number)
-            return account;
+            return &account;
     }
 }
 
-vector<string> split(string line) {
+vector<string> split(string &line) {
     vector<string> array;
     string temp;
     for (char x: line) {
@@ -136,6 +145,35 @@ Bank::Bank() {
     }
 }
 
+void Bank::deposit() {
+    int account_number = get_account_number();
+    double balance = stod(get_balance());
+    Account *account = search_for_account_number(account_number);
+    account->set_deposit(balance);
+    rewrite_file();
+}
 
+void Bank::withdrawal() {
+    int account_number = get_account_number();
+    double balance = stod(get_balance());
+    Account *account = search_for_account_number(account_number);
+    account->set_withdrawal(balance);
+    rewrite_file();
+}
 
+void Bank::close_account() {
+    int account_number = get_account_number();
+    accounts.erase(accounts.begin() + account_number - 1);
+    rewrite_file();
+}
 
+void Bank::rewrite_file() {
+    out_file.close();
+    out_file.open("../bank_system.txt", ofstream::out | ofstream::trunc);
+    for (auto &account: accounts) {
+        out_file << account.get_first_name() << ","
+                 << account.get_last_name() << ","
+                 << account.get_account_number() << ","
+                 << account.get_balance() << endl;
+    }
+}

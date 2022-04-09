@@ -25,6 +25,7 @@ const int Commands::SHOW_ACCOUNTS = 6;
 const int Commands::EXIT = 7;
 
 void Application::start() {
+    Bank bank;
     commands_list_header();
     while (true) {
         commands_list();
@@ -62,33 +63,31 @@ string Application::choose_command() {
     return command;
 }
 
-int Application::command_string_to_integer(string &commandStr) {
+int Application::command_string_to_integer(string &command_str) {
     int command = 0;
     try {
-        command = stoi(commandStr);
+        command = stoi(command_str);
     } catch (...) {
     }
     return command;
 }
 
 void Application::perform_command(int command) {
-    Account account;
     switch (command) {
         case Commands::OPEN_ACCOUNT:
-            Bank::get_data();
+            Bank::open_account();
             break;
         case Commands::BALANCE_ENQUIRY:
             Bank::show_searched_account();
             break;
         case Commands::DEPOSIT:
-            Bank::get_account_number();
-            account.set_deposit(Bank::get_balance());
+            Bank::deposit();
             break;
         case Commands::WITHDRAWAL:
-            Bank::get_account_number();
-            account.set_withdrawal(Bank::get_balance());
+            Bank::withdrawal();
             break;
         case Commands::CLOSE_ACCOUNT:
+            Bank::close_account();
             break;
         case Commands::SHOW_ACCOUNTS:
             Bank::display_accounts();
@@ -100,8 +99,8 @@ void Application::perform_command(int command) {
 }
 
 void Application::clear_console() {
-    string x;
-    getline(cin, x);
+    string line;
+    getline(cin, line);
     cin.ignore();
     system("clear");
 }

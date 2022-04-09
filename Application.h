@@ -15,7 +15,7 @@ private:
 
     static void perform_command(int command);
 
-    static int command_string_to_integer(string &commandStr);
+    static int command_string_to_integer(string &command_str);
 
     static void clear_console();
 

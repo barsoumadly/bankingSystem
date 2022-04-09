@@ -1,3 +1,3 @@
-/cygdrive/c/Users/Barso/CLionProjects/BankingSystem/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/c/Users/Barso/CLionProjects/BankingSystem/cmake-build-debug/CMakeFiles/edit_cache.dir
-/cygdrive/c/Users/Barso/CLionProjects/BankingSystem/cmake-build-debug/CMakeFiles/BankingSystem.dir
+C:/Users/Barso/CLionProjects/BankingSystem/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Barso/CLionProjects/BankingSystem/cmake-build-debug/CMakeFiles/BankingSystem.dir
+C:/Users/Barso/CLionProjects/BankingSystem/cmake-build-debug/CMakeFiles/rebuild_cache.dir
